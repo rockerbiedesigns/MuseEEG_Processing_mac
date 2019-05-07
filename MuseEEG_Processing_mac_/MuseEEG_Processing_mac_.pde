@@ -35,7 +35,7 @@ float EEG_deltaWave; //rest
 void setup()
 {
   oscp5 = new OscP5(this, 7000); //OSC readings from port 7000. (NOTE: as stated above, change to 5000 if no readings appear)
-  String portA = Serial.list()[0]; //Serial opens first available COM
+  String portA = Serial.list()[0]; //Serial opens first available COM for Arduino. Can delete if not required
 }
 
 void draw()
@@ -54,10 +54,12 @@ void draw()
 
 void oscEvent(OscMessage theMessage) {
   //Grabs Muse Monitor data through Open Sound Control (OSC)
+  
   //Print the address and typetag of the message to the console below
   //println("OSC Message received! The address pattern is " + theMessage.addrPattern() + ". The typetag is: " + theMessage.typetag());
   //typetag is 'dddd' (PC) which is a double variable
   //typetage is 'f' (Mac thru musemonitor) which is float variable
+  
   if (theMessage.checkAddrPattern("/muse/elements/gamma_absolute") == true ) {
     EEG_gammaWave = theMessage.get(0).floatValue();
     //println below tests if EEG_gammaWave is receiving data. Uncomment for troubleshooting
